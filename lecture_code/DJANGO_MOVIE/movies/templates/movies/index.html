@@ -1,0 +1,13 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}1:N{% endblock %}
+{% block body %}
+    <h1 class='text-center'>MOVIEs</h1>
+    <hr>
+    {% for movie in movies %}
+        <p>No.{{ movie.pk }}</p>
+        <p>글 제목: <a href="{% url 'movies:detail' movie.pk %}">{{ movie.title }}</a></p>
+        <img src="{{ movie.poster_url }}" alt="poster">
+        <hr>
+    {% endfor %}
+{% endblock %}
