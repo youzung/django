@@ -1,0 +1,15 @@
+{% extends 'students/base.html' %}
+
+{% block title %}NEW{% endblock %}
+{% block body %}
+    <h1 class='text-center'>학생정보 등록</h1>
+    <form action="/students/create/" method="POST">
+        {% csrf_token %}
+        이름: <input type="text" name="name"><br>
+        이메일: <input type="text" name="email"><br>
+        나이: <input type="text" name="age"><br>
+        <input type="submit">
+    </form>
+    <hr>
+    <a href="/students/">[학생 목록]</a>
+{% endblock %}

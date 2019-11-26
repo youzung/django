@@ -1,0 +1,45 @@
+<div class='container'>
+    <h1>DTL(Django Template Language) 관련 문법</h1>
+    <ul>
+        <li>for</li>
+        <li>if</li>
+        <li>helper</li>
+    </ul>
+
+    <h1>데이터 넘겨받기</h1>
+    <p>{{ name }}</p>
+    {% for item in data %}
+        <p>{{ item }}</p>
+    {% endfor %}
+
+    <h2>for문 활용법</h2>
+    <h2>데이터가 없을때,</h2>
+    {% for movie in empty_data %}
+        <p>{{ forloop.counter }}: {{ movie }}</p>
+    {% empty %}
+        <p>영화 데이터가 없습니다.</p>
+    {% endfor %}
+
+    <h2>2중 for문</h2>
+    {% for array in matrix %}
+        {% for num in array %}
+            <p>{{ num }}</p>
+        {% endfor %}
+    {% endfor %}
+
+    <h2>다양한 helper / filter</h2>
+    <h3>helper</h3>
+    {% lorem 3 p random %}
+
+    <h3>filter</h3>
+    {% for movie in empty_data %}
+        {{ movie|length }}
+        {{ movie|truncatechars:5 }}
+    {% endfor %}
+
+    <h4>int</h4>
+    {{ number|add:26 }}
+
+    <h4>datetime</h4>
+    {% now 'y년 m월 d일 h시 i분 a' %}
+</div>

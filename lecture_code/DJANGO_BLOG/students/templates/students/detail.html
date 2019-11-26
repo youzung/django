@@ -1,0 +1,15 @@
+{% extends 'students/base.html' %}
+
+{% block title %}DETAIL{% endblock %}
+{% block body %}
+    <h1 class='text-center'>학생정보 상세보기</h1>
+    <h2>{{ student.pk }}번 학생</h2>
+    <hr>
+    <p>이름: {{ student.name }}</p>
+    <p>이메일: {{ student.email }}</p>
+    <p>나이: {{ student.age }}</p>
+    <hr>
+    <a href="/students/{{ student.pk }}/edit/">[수정]</a><br>
+    <a href="/students/{{ student.pk }}/delete/">[삭제]</a><br>
+    <a href="/students/">[학생 목록]</a>
+{% endblock %}

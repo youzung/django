@@ -1,0 +1,16 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}EDIT{% endblock %}
+{% block body %}
+    <h1 class='text-center'>Movie 상세정보 수정</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        제목: <input type="text" name="title" value="{{ movie.title }}"><br>
+        관객수: <input type="number" name="audience" value="{{ movie.audience }}"><br>
+        포스터 URL: <input type="text" name="poster_url" value="{{ movie.poster_url }}"><br>
+        설명: <textarea name="description" id="" cols="30" rows="10">{{ movie.description }}</textarea>
+        <input type="submit" value="수정">
+    </form>
+    <hr>
+    <a href="{% url 'movies:detail' movie.pk %}">[뒤로가기]</a>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'articles/base.html' %}
+
+{% block title %}CRUD{% endblock %}
+{% block body %}
+    <h1 class='text-center'>Students</h1>
+    <a href="/students/new/">[학생 등록]</a>
+    <hr>
+
+    {% for student in students %}
+    <div class="box">
+        <p>번호. {{ student.pk }}</p>
+        <p>이름 : {{ student.name }}</p>
+        <p><a href="/students/{{ student.pk }}">[학생정보 상세보기]</a></p>
+        <!-- <p>글내용 : {{ article.content }}</p>-->
+    </div>
+
+    <style>
+        .box{display: block;float: left;width: 30%;border: 1px solid #ccc;margin: 0 1.5%;}
+    </style>
+    {% endfor %}
+{% endblock %}

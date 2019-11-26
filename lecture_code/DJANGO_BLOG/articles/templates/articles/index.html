@@ -1,0 +1,26 @@
+{% extends 'articles/base.html' %}
+{% load static %}
+
+{% block title %}CRUD{% endblock %}
+{% block body %}
+    <!--<h1 class='text-center'>Articles</h1>-->
+    <div class="bg"></div>
+
+    <!--<img src="{% static 'articles/images/chicken.png' %}" alt="sample">
+    <img src="{% static 'images/yeopki.png' %}" alt="sample">-->
+    {% if user.is_authenticated %}
+    <a href="{% url 'articles:create' %}">[새글 작성]</a>
+    {% else %}
+    <a href="{% url 'accounts:login' %}">[새 글을 작성하려면 로그인하세요]</a>
+    {% endif %}
+    <hr>
+
+    {% for article in articles %}
+        <p>No. {{ article.pk }}</p>
+        <p>글제목 : {{ article.title }} | 작성자 : <a href="{% url 'accounts:profile' article.user %}">{{ article.user }}</a></p>
+        <p><a href="{% url 'articles:detail' article.pk %}">[글 상세보기]</a></p>
+        <!-- <p>글내용 : {{ article.content }}</p>-->
+        {% include 'articles/_article.html' %}
+        <hr>
+    {% endfor %}
+{% endblock %}

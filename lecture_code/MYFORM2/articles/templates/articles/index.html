@@ -1,0 +1,12 @@
+{% extends 'articles/base.html' %}
+{% block body %}
+<h1 class='text-center'>Articles</h1>
+<a href="{% url 'articles:create' %}">[NEW]</a>
+<hr>
+{% for article in articles %}
+    <p>{{ article.pk }}</p>
+    <p>{{ article.title }}</p>
+    <a href="{% url 'articles:detail' article.pk %}">[DETAIL]</a>
+    <hr>
+{% endfor %}
+{% endblock %}

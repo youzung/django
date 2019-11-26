@@ -1,0 +1,42 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}DETAIL{% endblock %}
+{% block body %}
+    <h1 class='text-center'>Movie 상세정보</h1>
+    <hr>
+    <p><img src="{{ movie.poster_url }}" alt="{{ movie.title }}" style="width: 100px;"></p>
+    <p>{{ movie.title }}</p>
+    <p>장르 : {{ movie.genre_id.name }}</p>
+    <p>평점 : {{ movie.score }}점</p>
+    <p>관객수 : {{ movie.audience }}명</p>
+    <p><b>줄거리</b><br>{{ movie.description }}</p>
+    <hr>
+    <a href="{% url 'movies:index' %}" class="btn btn-info" style="display: inline;">목록</a>
+    <a href="{% url 'movies:update' movie.pk %}" class="btn btn-primary" style="display: inline;">수정</a>
+    <form action="{% url 'movies:delete' movie.pk %}" onclick="return confirm('R U Sure..??')" method="POST" style="display: inline;">
+        {% csrf_token %}
+        <button class="btn btn-danger" style="display: inline;">삭제</button>
+    </form>
+    <hr>
+    <form action="{% url 'movies:score_new' movie.id %}" method="POST">
+        {% csrf_token %}
+        한줄평: <input type="text" name="content">
+        평점: <input type="number" name="score">
+        <button class="btn btn-success">입력</button>
+    </form>
+    <hr>
+    <h3>한줄평</h3><br>
+    {% for score in scores %}
+    <ul>
+        <li>한줄평: {{ score.content }} / 평점: {{ score.score }}
+            <form action="{% url 'movies:score_delete' movie.id score.id %}" method="POST" style="display: inline">
+                {% csrf_token %}
+                <button class="btn btn-warning btn-sm">삭제</button>
+            </form>
+        </li>
+    </ul>
+    {% empty %}
+    <p>한줄평이 아직 없습니다. 한줄평을 작성해 주세요.</p>
+    {% endfor %}
+    <!--<a href="{% url 'movies:delete' movie.pk %}">[삭제]</a><br>-->
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}CRUD{% endblock %}
+{% block body %}
+    <h1 class='text-center'>Movies</h1>
+    <a href="{% url 'movies:create' %}" class="btn btn-info btn-lg btn-block">영화 등록</a>
+    <hr>
+
+    <div class="movie_list row">
+    {% for movie in movies %}
+        <div class="col-xs-6 col-sm-4 col-sm-4">
+            <p><a href="{% url 'movies:detail' movie.pk %}"><img src="{{ movie.poster_url }}" alt="{{ movie.title }}" class="img-thumbnail img-responsive"></a></p>
+            <p class="title"><a href="{% url 'movies:detail' movie.pk %}">{{ movie.title }}</a></p>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

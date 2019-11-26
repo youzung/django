@@ -1,0 +1,57 @@
+{% extends 'articles/base.html' %}
+{% load static %}
+
+{% block title %}DETAIL{% endblock %}
+{% block body %}
+    <h1 class='text-center'>DETAIL</h1>
+    <h2>{{ article.pk }}번 글</h2>
+    <p>작성자: {{ article.user }}</p>
+    <hr>
+    <p>제목: {{ article.title }}</p>
+    <p>내용: {{ article.content }}</p>
+    {% if article.image %}
+    <p>이미지: <img src="{{ article.image.url }}" alt="{{ article.image }}"></p>
+    {% else %}
+    <p>이미지: <img src="{% static 'articles/images/no_image.png' %}" alt="no_image"></p>
+    {% endif %}
+    <p>작성시간: {{ article.created_at }}</p>
+    <p>수정시간: {{ article.updated_at }}</p>
+    <hr>
+    {% if user.is_authenticated %}
+    <form action="{% url 'articles:comment_create' article.id %}" method="POST">
+        {% csrf_token %}
+        댓글 입력: <input type="text" name="content">
+        <input type="submit" value="입력">
+    </form>
+    {% else %}
+    <p>로그인해야 댓글을 쓸 수 있다</p>
+    {% endif %}
+
+    <hr>
+    <h3>댓글 목록 | 현재 댓글수: {{ comments|length }}</h3>
+    {% for comment in comments %}
+    <ul>
+        <li>
+            {{ comment.content }}
+            <form action="{% url 'articles:comment_delete' article.id comment.id %}" style="display: inline" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-warning btn-sm">삭제</button>
+            </form>
+        </li>
+    </ul>
+    {% empty %}
+        <p>댓글이 없습니다.</p>
+    {% endfor %}
+    <hr>
+        {% include 'articles/_follow.html' %}
+
+    {% if article.user == request.user %}
+    <a href="{% url 'articles:update' article.pk %}" class="btn btn-primary" style="display: inline;">수정</a>
+    <form action="{% url 'articles:delete' article.pk %}" onclick="return confirm('R U Sure..??')" method="POST" style="display: inline;">
+        {% csrf_token %}
+        <button class="btn btn-danger" style="display: inline;">삭제</button>
+    </form>
+    {% endif %}
+    <!--<a href="{% url 'articles:delete' article.pk %}">[삭제]</a><br>-->
+    <a href="{% url 'articles:index' %}" class="btn btn-info" style="display: inline;">목록</a>
+{% endblock %}
